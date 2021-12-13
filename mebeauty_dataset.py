@@ -16,7 +16,8 @@ class MEBeauty(Dataset):
     
     """Facial Beauty Dataset"""
 
-    def __init__(self, root_dir, train = True, transform=None):
+    def __init__(self, root_dir, train_scores, test_scores, train = True, 
+                    transform=None):
         """
         Args:
             root_dir (string): Directory with all the images.
@@ -26,9 +27,9 @@ class MEBeauty(Dataset):
        
     
         if train == True:
-            folder = 'scores/train_universal_scores.csv'
+            folder = train_scores
         else:
-            folder = 'scores/test_universal_scores.csv'
+            folder = test_scores
             
         self.root_dir = root_dir
         self.images_scores = pd.read_csv(os.path.join(self.root_dir, folder))
@@ -53,7 +54,7 @@ class MEBeauty(Dataset):
         return image, score
 
 
-def train_test_data(root_dir = '', train_augmentation = False, batch = 16):
+def train_test_data(train_scores, test_scores,root_dir = '', train_augmentation = False, batch = 16):
     
     # get train and test dataloader from MEBeauty dataset
     
@@ -80,9 +81,9 @@ def train_test_data(root_dir = '', train_augmentation = False, batch = 16):
                           transforms.Resize(image_size),
                           transforms.Normalize([0.5, 0.5, 0.5],[0.5, 0.5, 0.5])])
     
-    train_data = MEBeauty(root_dir, train = True, transform = transform_train)
+    train_data = MEBeauty(root_dir, train_scores,test_scores, train = True, transform = transform_train)
     trainloader = torch.utils.data.DataLoader(train_data, batch_size = batch, shuffle =True)
-    test_data = MEBeauty(root_dir, train = False, transform = transform_test)
+    test_data = MEBeauty(root_dir, train_scores,test_scores, train = False, transform = transform_test)
     testloader = torch.utils.data.DataLoader(train_data, batch_size = batch, shuffle =True)
     
     return trainloader, trainloader

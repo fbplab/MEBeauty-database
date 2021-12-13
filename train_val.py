@@ -12,7 +12,7 @@ import torch.optim as optim
 
 
 
-def fit(epochs = 10, model, loss_func, opt, train_dl, valid_dl, device = "cpu"):
+def fit(model, loss_func, opt, train_dl, valid_dl, device = "cpu", epochs = 10):
     
     
     train_losses = []
@@ -119,6 +119,10 @@ if __name__ == '__main__':
                          default = "vgg16")
     parser.add_argument('--train_augmentation', type=bool, help='train augmentation?',
                          default = False)
+    parser.add_argument('--train_scores', type=str, help='csv file with scores for training',
+                         default = 'scores/train_universal_scores.csv')
+    parser.add_argument('--test_scores', type=str, help='csv file with scores for validation',
+                         default = 'scores/test_universal_scores.csv')
     parser.add_argument('--batch_size', type=int, help='batch size',
                          default = 32)
     parser.add_argument('--epochs', type=int, help='number of epochs',
@@ -127,15 +131,18 @@ if __name__ == '__main__':
     
     base_model = args.base_model
     train_aug = args.train_augmentation
+    train_scores = args.train_scores
+    test_scores = args.test_scores
     batch = args.batch_size
     epochs = args.epochs
    
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
-    traindata, testdata = mebeauty_dataset.train_test_data(train_augmentation = train_aug, batch = batch) # train and test dataloaders
+    traindata, testdata = mebeauty_dataset.train_test_data(train_scores, test_scores, train_augmentation = train_aug, 
+                                                           batch = batch) # train and test dataloaders
     
     model, criterion, optimizer = model_preparation(base_model, device)
     
-    info = fit(epochs, model, criterion, optimizer, traindata, testdata, device)
+    info = fit(model, criterion, optimizer, traindata, testdata, device, epochs)
     
     
