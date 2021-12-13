@@ -14,8 +14,12 @@ cd MEBeautydatabase/
 ```
 ### Train the model with one of the pretrained base model
 
+Default train/test scores are average. If you want to train on personal scores, please firstly create csv files by using `create_score_lists.ipynb`
+
 ```bash
-python train_val.py train.py --base_model [choosen base model] --train_augmentation [augmented train set or not]
+python train_val.py train.py --base_model [choosen base model] --train_scores [csv file with train scores]
+                                 --test_scores [csv file with test scores]
+                                 --train_augmentation [augmented train set or not]
                                  --batch_size [batch size] --epochs [number of epochs]
 ```
 Please note that data augmentation is time-consuming.
@@ -25,6 +29,7 @@ Possible base models: densenet, mobilenet, alexnet, vgg16 (default)
 ### Prediction
 
 ```bash
+
  python predict.py  --image_path [path to the image for prediction] --model_path [pretrained model filename]
     
 ```
