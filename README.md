@@ -1,7 +1,7 @@
 # Multi-ethnic MEBeauty dataset and facial attractiveness assessment
 
 2550 images of Black, Asian, Caucasian, Hispanic, Indian, Mideastern female and male faces, rated by about 300 individuals with various cultural and social background.<br />
-Generic(average) and personal scores are included in the `/scores/train_2022, test_2022, val_2022.txt` and `/scores/generic_scores_all_2022.xlsx`, respectively. The 'date' personal type scores are located in `/scores/generic_scores_all_2022.xlsx`
+Generic(average) and personal scores are included in the `/scores/train_2022, test_2022, val_2022.txt` and `/scores/generic_scores_all_2022.xlsx`, respectively. The 'date' personal type scores are located in `/scores/generic_scores_all_2022.xlsx(column mean)`
 
 The dataset collection (AWS SageMaker), cleaning and analysis can be found in `MEBeauty_creation_cleaning`
 
